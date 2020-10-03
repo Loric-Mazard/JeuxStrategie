@@ -5,12 +5,8 @@ class Batiment():
     def __init__(self):
         self.image = pygame.image.load("decor/batiment.png")
         self.rect = self.image.get_rect();
-        self.posX = 0;
-        self.posY = 0;
-
-    def Create(self):
-        self.posX = pygame.mouse.get_pos()[0] - (self.rect[2]/2)
-        self.posY = pygame.mouse.get_pos()[1] - (self.rect[3]/2)
+        self.posX = pygame.mouse.get_pos()[0] - (self.rect[2]/2);
+        self.posY = pygame.mouse.get_pos()[1] - (self.rect[3]/2);
         
 
 #Creation d'une fenetre de 1080x720
@@ -29,11 +25,11 @@ while game:
             if event.key == pygame.K_ESCAPE:
                 game = False
 
-        #Quand on clique souris
+        #Quand on clique souris affiche un batiment a l'emplacement de la souris
         if event.type == pygame.MOUSEBUTTONDOWN:
             batiments.append(Batiment())
-            batiments[len(batiments)-1].Create()
 
+    #Afficher chaque batiment
     for batiment in batiments:
         window.blit(batiment.image, (batiment.posX, batiment.posY))
 
