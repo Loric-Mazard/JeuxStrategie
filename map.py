@@ -1,7 +1,9 @@
 import pygame
 
+#Creation d'une fenetre de 1080x720
 window = pygame.display.set_mode((1080, 720))
 
+#importation de l'image de fond et creation de son rectangle
 background = pygame.image.load("decor/map.png")
 map_rect = background.get_rect()
 x_map, y_map = 0, 0
@@ -9,16 +11,16 @@ x_map, y_map = 0, 0
 game = True
 
 while game:
+    #Efface tout l'ecran (noir)
     window.fill((0, 0, 0))
 
+    #Quand touche espace appuyé ferme la fenetre
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 game = False
-           
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print("click")
 
+    #Bouge le fond en fonction de la touche appuyé
     key_move  = pygame.key.get_pressed()
     if key_move[pygame.K_LEFT] and x_map < 0:
         x_map += 10
@@ -29,7 +31,7 @@ while game:
     elif key_move[pygame.K_DOWN] and y_map > -map_rect[3]+720:
         y_map -= 10
 
-    
+    #Affiche l'image de fond
     window.blit(background, (x_map, y_map))
     pygame.display.flip()
 
