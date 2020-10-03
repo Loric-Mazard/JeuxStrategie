@@ -9,8 +9,8 @@ class Batiment():
         self.posY = 0;
 
     def Create(self):
-        self.posX = pygame.mouse.get_pos()[0]
-        self.posY = pygame.mouse.get_pos()[1]
+        self.posX = pygame.mouse.get_pos()[0] - (self.rect[2]/2)
+        self.posY = pygame.mouse.get_pos()[1] - (self.rect[3]/2)
         
 
 #Creation d'une fenetre de 1080x720
