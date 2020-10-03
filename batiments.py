@@ -5,8 +5,8 @@ class Batiment():
     def __init__(self):
         self.image = pygame.image.load("decor/batiment.png")
         self.rect = self.image.get_rect();
-        self.posX = pygame.mouse.get_pos()[0] - (self.rect[2]/2);
-        self.posY = pygame.mouse.get_pos()[1] - (self.rect[3]/2);
+        self.posX = pygame.mouse.get_pos()[0] // 20 * 20
+        self.posY = pygame.mouse.get_pos()[1] // 20 * 20
         
 
 #Creation d'une fenetre de 1080x720
