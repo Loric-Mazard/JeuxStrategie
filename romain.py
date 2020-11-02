@@ -1,6 +1,6 @@
 import pygame
 
-
+#Classe de la map
 class Map:
 
     def __init__(self):
@@ -28,7 +28,7 @@ class Map:
             self.rect.y -= 10
 
     def add_new_bat(self, mouse):
-        self.bats.append(Batiment(mouse))
+        self.bats.append(Batiment(mouse)) #Pas terrible
 
     def get_nb_bats(self):
         return len(self.bats)
@@ -38,7 +38,7 @@ class Map:
         for i in self.bats:
             window.blit(i.image, i.rect)
 
-
+#Classe des batiments
 class Batiment:
 
     def __init__(self, mouse):
@@ -50,6 +50,7 @@ class Batiment:
 
 window = pygame.display.set_mode((1080, 720))
 
+#Creation de la map
 map = Map()
 
 game = True
@@ -58,16 +59,20 @@ while game:
     window.fill((0, 0, 0))
     mouse_pos = ((pygame.mouse.get_pos()[0] // 40) * 40, (pygame.mouse.get_pos()[1] // 40 * 40))
 
+    #Quand on appuie sur une touche
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            #Fermer la fenetre quand on appuis sur echap
             if event.key == pygame.K_ESCAPE:
                 game = False
             elif event.key == pygame.K_RETURN:
                 print(map.get_nb_bats())
 
+        #Creer un batiment quand on clique 
         if event.type == pygame.MOUSEBUTTONDOWN:
             map.add_new_bat(mouse_pos)
 
+    #Deplacement de la camera
     key_move = pygame.key.get_pressed()
     if key_move[pygame.K_LEFT]:
         map.move_left()
@@ -78,6 +83,7 @@ while game:
     elif key_move[pygame.K_DOWN]:
         map.move_down()
 
+    #Affichage dans la fenetre
     map.affichage(window)
     pygame.draw.rect(window, (255, 255, 255), (mouse_pos[0], mouse_pos[1], 40, 40))
     pygame.display.flip()
