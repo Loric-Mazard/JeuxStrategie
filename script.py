@@ -17,25 +17,25 @@ class Map:
         if self.rect.x < 0:
             self.rect.x += 10
             for i in self.bats:
-                i.MajPos(10,0)
+                i.MajPosition(10,0)
 
     def move_right(self):
         if self.rect.x > -self.rect[2] + 1080:
             self.rect.x -= 10
             for i in self.bats:
-                i.MajPos(-10,0)
+                i.MajPosition(-10,0)
 
     def move_up(self):
         if self.rect.y < 0:
             self.rect.y += 10
             for i in self.bats:
-                i.MajPos(0,10)
+                i.MajPosition(0,10)
 
     def move_down(self):
         if self.rect.y > -self.rect[3] + 1080:
             self.rect.y -= 10
             for i in self.bats:
-                i.MajPos(0,-10)
+                i.MajPosition(0,-10)
 
     def add_new_bat(self, mouse):
         self.bats.append(Batiment(mouse))
@@ -45,14 +45,19 @@ class Map:
 
     def affichage(self, window):
         window.blit(self.image, self.rect)
+
         for i in self.bats:
             i.Affichage()
-        
+
+        font = pygame.font.SysFont('Lato',40,True)
+        message = font.render("Money : " + str(self.money),True,(255,255,255))
+        window.blit(message, (20,10,100,50))
 
 #Classe des batiments
 class Batiment:
 
     def __init__(self, mouse):
+        print(mouse)
         self.image = pygame.image.load("decor/batiment.png")
         self.rect = self.image.get_rect()
         self.rect.x = mouse[0]+10
@@ -61,11 +66,12 @@ class Batiment:
     def Affichage(self):
         window.blit(self.image, self.rect)
 
-    def MajPos(self, x, y):
+    def MajPosition(self, x, y):
         self.rect.x += x
         self.rect.y += y
 
 
+pygame.init()
 window = pygame.display.set_mode((1080, 720))
 
 #Creation de la map
@@ -75,7 +81,7 @@ game = True
 
 while game:
     window.fill((0, 0, 0))
-    mouse_pos = ((pygame.mouse.get_pos()[0] // 40) * 40, (pygame.mouse.get_pos()[1] // 40 * 40))
+    mouse_pos = ((pygame.mouse.get_pos()[0] // 40) * 40 + (map.rect.x % 40), (pygame.mouse.get_pos()[1] // 40 * 40) + (map.rect.y % 40))
 
     #Quand on appuie sur une touche
     for event in pygame.event.get():
