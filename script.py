@@ -49,6 +49,11 @@ class Map:
     def add_new_bat(self, mouse):
         self.bats.append(Batiment(mouse))
 
+    #Augmentation de l'argent
+    def AddRessource(self, ressource):
+        if(ressource == "money"):
+            self.money += 1
+
     #Affichage dans la fenetre
     def affichage(self, window):
         #Affichage carte
@@ -57,6 +62,7 @@ class Map:
         #Affichage batiments
         for i in self.bats:
             i.Affichage()
+            i.Production(self)
 
         #Affichage money 
         font = pygame.font.SysFont('Lato',40,True)
@@ -75,6 +81,11 @@ class Batiment:
         self.rect.x = mouse[0]+10
         self.rect.y = mouse[1]+10
 
+        #Production du batiment
+        self.production = 1;
+        self.tempsProd = 50; #en nombre d'image par sec
+        self.temps = 0;
+
     #Affichage du batiment
     def Affichage(self):
         window.blit(self.image, self.rect)
@@ -84,9 +95,18 @@ class Batiment:
         self.rect.x += x
         self.rect.y += y
 
+    #production de l'argent
+    def Production(self,map):
+        self.temps += 1
+        if(self.temps == self.tempsProd):
+            self.temps = 0
+            map.AddRessource("money")
+
+
 #Initialisation de la fenetre
 pygame.init()
 window = pygame.display.set_mode((1080, 720))
+clock = pygame.time.Clock()
 
 #Creation de la map
 map = Map()
@@ -94,6 +114,9 @@ map = Map()
 game = True
 
 while game:
+
+    clock.tick(20)
+
     window.fill((0, 0, 0))
     mouse_pos = ((pygame.mouse.get_pos()[0] // 40) * 40 + (map.rect.x % 40), (pygame.mouse.get_pos()[1] // 40 * 40) + (map.rect.y % 40))
 
